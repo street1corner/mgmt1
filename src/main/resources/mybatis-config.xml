@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE configuration  
+    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"  
+    "mybatis-3-config.dtd">  
+<configuration>  
+    <!-- pagehelper分页插件 -->
+    <plugins>  
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">  
+           <!-- property属性可以不用配置，新版本能自动识别底层数据库 -->  
+           <property name="helperDialect" value="mysql"/>  
+        </plugin>  
+    </plugins>  
+      
+<!--     <environments default="mysql">   -->
+<!--         <environment id="mysql">   -->
+<!--             <transactionManager type="JDBC" />   -->
+<!--             <dataSource type="POOLED">   -->
+<!--                 <property name="driver" value="com.mysql.jdbc.Driver" />   -->
+<!--                 <property name="url" value="jdbc:mysql://localhost:3306/schooldb" />   -->
+<!--                 <property name="username" value="root" />   -->
+<!--                 <property name="password" value="123456" />   -->
+<!--             </dataSource>   -->
+<!--         </environment>   -->
+<!--     </environments>   -->
+<!--     <mappers>   -->
+<!--         <mapper resource="com/obtk/entitys/UserMapper.xml" />   -->
+<!--         <mapper resource="com/obtk/entitys/StudentMapper.xml" />   -->
+<!--     </mappers>   -->
+</configuration> 
