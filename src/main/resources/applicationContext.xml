@@ -57,9 +57,9 @@
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">  
         <property name="dataSource" ref="dataSource"></property>  
         <!--mybatis的配置文件-->  
-        <property name="configLocation" value="classpath:boot/config/mybatis-config.xml" />  
+        <property name="configLocation" value="classpath:mybatis-config.xml" />  
         <!--扫描 XXXmapper.xml映射文件,配置扫描的路径-->  
-        <property name="mapperLocations" value="classpath:com/tiemao/dao/mapping/*.xml"></property>  
+        <property name="mapperLocations" value="classpath:mappers/*.xml"></property>  
     </bean>  
     
     <!-- DAO接口所在包名，Spring会自动查找之中的类 -->  
@@ -67,7 +67,7 @@
         <!-- 指定扫描什么包 -->
         <property name="basePackage" value="com.tiemao.dao" />  
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>  
-    </bean>  
+    </bean>
   
     <!--声明式事务管理-->  
     <bean id="transactionManager"  class="org.springframework.jdbc.datasource.DataSourceTransactionManager">  
