@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tiemao.dao.PcStandingbookMapper">
+  <resultMap id="BaseResultMap" type="com.tiemao.pojo.PcStandingbook">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="computer_id" jdbcType="VARCHAR" property="computerId" />
+    <result column="brand" jdbcType="VARCHAR" property="brand" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="configure" jdbcType="VARCHAR" property="configure" />
+    <result column="installed_system" jdbcType="VARCHAR" property="installedSystem" />
+    <result column="installed_date" jdbcType="DATE" property="installedDate" />
+    <result column="guarantee_time" jdbcType="VARCHAR" property="guaranteeTime" />
+    <result column="mirrored_version" jdbcType="VARCHAR" property="mirroredVersion" />
+    <result column="mac_address" jdbcType="VARCHAR" property="macAddress" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="installer" jdbcType="VARCHAR" property="installer" />
+    <result column="create_time" jdbcType="DATE" property="createTime" />
+    <result column="update_time" jdbcType="DATE" property="updateTime" />
+    <result column="lastmodify_person" jdbcType="VARCHAR" property="lastmodifyPerson" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.tiemao.pojo.PcStandingbook">
+    <result column="installed_soft" jdbcType="LONGVARCHAR" property="installedSoft" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, computer_id, brand, type, configure, installed_system, installed_date, guarantee_time, 
+    mirrored_version, mac_address, username, installer, create_time, update_time, lastmodify_person, installed_soft
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    from pc_standingbook
+    where computer_id = #{computerId,jdbcType=VARCHAR}
+  </select>
+  <select id="getPcStandingbookInfo" parameterType="map" resultMap="ResultMapWithBLOBs">
+  	select
+  	<include refid="Base_Column_List"></include>
+  	from tm.pc_standingbook
+ 	<if test="searchKey!=null and searchKey!='' and searchValue!=null and searchValue!=''">
+		where ${searchKey} like '%${searchValue}%' 
+	</if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tm.pc_standingbook
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.tiemao.pojo.PcStandingbook">
+    insert into pc_standingbook (computer_id, brand, type, 
+      configure, installed_system, installed_date, 
+      guarantee_time, mirrored_version, mac_address, 
+      username, installer)
+    values (#{computerId,jdbcType=VARCHAR}, #{brand,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{configure,jdbcType=VARCHAR}, #{installedSystem,jdbcType=VARCHAR}, #{installedDate,jdbcType=DATE}, 
+      #{guaranteeTime,jdbcType=VARCHAR}, #{mirroredVersion,jdbcType=VARCHAR}, #{macAddress,jdbcType=VARCHAR}, 
+      #{username,jdbcType=VARCHAR}, #{installer,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tiemao.pojo.PcStandingbook">
+    insert into tm.pc_standingbook
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="computerId != null">
+        computer_id,
+      </if>
+      <if test="brand != null">
+        brand,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="configure != null">
+        configure,
+      </if>
+      <if test="installedSystem != null">
+        installed_system,
+      </if>
+      <if test="installedDate != null">
+        installed_date,
+      </if>
+      <if test="guaranteeTime != null">
+        guarantee_time,
+      </if>
+      <if test="mirroredVersion != null">
+        mirrored_version,
+      </if>
+      <if test="macAddress != null">
+        mac_address,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="installer != null">
+        installer,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="lastmodifyPerson != null">
+        lastmodify_person,
+      </if>
+      <if test="installedSoft != null">
+        installed_soft,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="computerId != null">
+        #{computerId,jdbcType=VARCHAR},
+      </if>
+      <if test="brand != null">
+        #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="configure != null">
+        #{configure,jdbcType=VARCHAR},
+      </if>
+      <if test="installedSystem != null">
+        #{installedSystem,jdbcType=VARCHAR},
+      </if>
+      <if test="installedDate != null">
+        #{installedDate,jdbcType=DATE},
+      </if>
+      <if test="guaranteeTime != null">
+        #{guaranteeTime,jdbcType=VARCHAR},
+      </if>
+      <if test="mirroredVersion != null">
+        #{mirroredVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="macAddress != null">
+        #{macAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="installer != null">
+        #{installer,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=DATE},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=DATE},
+      </if>
+      <if test="lastmodifyPerson != null">
+        #{lastmodifyPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="installedSoft != null">
+        #{installedSoft,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tiemao.pojo.PcStandingbook">
+    update tm.pc_standingbook
+    <set>
+      <if test="computerId != null">
+        computer_id = #{computerId,jdbcType=VARCHAR},
+      </if>
+      <if test="brand != null">
+        brand = #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="configure != null">
+        configure = #{configure,jdbcType=VARCHAR},
+      </if>
+      <if test="installedSystem != null">
+        installed_system = #{installedSystem,jdbcType=VARCHAR},
+      </if>
+      <if test="installedDate != null">
+        installed_date = #{installedDate,jdbcType=DATE},
+      </if>
+      <if test="guaranteeTime != null">
+        guarantee_time = #{guaranteeTime,jdbcType=VARCHAR},
+      </if>
+      <if test="mirroredVersion != null">
+        mirrored_version = #{mirroredVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="macAddress != null">
+        mac_address = #{macAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="installer != null">
+        installer = #{installer,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=DATE},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=DATE},
+      </if>
+      <if test="lastmodifyPerson != null">
+        lastmodify_person = #{lastmodifyPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="installedSoft != null">
+        installed_soft = #{installedSoft,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tiemao.pojo.PcStandingbook">
+    update pc_standingbook
+    set brand = #{brand,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      configure = #{configure,jdbcType=VARCHAR},
+      installed_system = #{installedSystem,jdbcType=VARCHAR},
+      installed_date = #{installedDate,jdbcType=DATE},
+      guarantee_time = #{guaranteeTime,jdbcType=VARCHAR},
+      mirrored_version = #{mirroredVersion,jdbcType=VARCHAR},
+      mac_address = #{macAddress,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
+      installer = #{installer,jdbcType=VARCHAR}
+    where computer_id = #{computerId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tiemao.dao.LingyongRecordMapper">
+  <resultMap id="BaseResultMap" type="com.tiemao.pojo.LingyongRecord">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="product_id" jdbcType="INTEGER" property="productId" />
+    <result column="user" jdbcType="VARCHAR" property="user" />
+    <result column="lingyong_time" jdbcType="DATE" property="lingyongTime" />
+    <result column="department" jdbcType="VARCHAR" property="department" />
+    <result column="use_purpose" jdbcType="VARCHAR" property="usePurpose" />
+    <result column="oldtonew" jdbcType="INTEGER" property="oldtonew" />
+    <result column="amount" jdbcType="INTEGER" property="amount" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" type="com.tiemao.pojo.LingyongRecord" id="ResultMapWithLingyong">
+  	<result column="product_name" jdbcType="VARCHAR" property="productName" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    id, product_id, user, lingyong_time, department, use_purpose, oldtonew, remark
+  </sql>
+  <sql id="Base_Column_List1">
+    id, l.product_id, user, lingyong_time, department, use_purpose, oldtonew, remark, amount
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from lingyong_record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="getLingyongRecordInfo" parameterType="map" resultMap="ResultMapWithLingyong">
+  	select
+  	<include refid="Base_Column_List1"></include>, product_name
+  	FROM tm.lingyong_record l LEFT JOIN tm.product p
+	ON l.product_id = p.product_id
+ 	<if test="searchKey!=null and searchKey!='' and searchValue!=null and searchValue!=''">
+		where ${searchKey} like '%${searchValue}%' 
+	</if>
+  </select>
+  
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tm.lingyong_record
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.tiemao.pojo.LingyongRecord">
+    insert into lingyong_record (id, product_id, user, 
+      lingyong_time, department, use_purpose, 
+      oldtonew, remark)
+    values (#{id,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, #{user,jdbcType=VARCHAR}, 
+      #{lingyongTime,jdbcType=DATE}, #{department,jdbcType=VARCHAR}, #{usePurpose,jdbcType=VARCHAR}, 
+      #{oldtonew,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tiemao.pojo.LingyongRecord">
+    insert into tm.lingyong_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="user != null">
+        user,
+      </if>
+      <if test="lingyongTime != null">
+        lingyong_time,
+      </if>
+      <if test="department != null">
+        department,
+      </if>
+      <if test="usePurpose != null">
+        use_purpose,
+      </if>
+      <if test="oldtonew != null">
+        oldtonew,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="user != null">
+        #{user,jdbcType=VARCHAR},
+      </if>
+      <if test="lingyongTime != null">
+        #{lingyongTime,jdbcType=DATE},
+      </if>
+      <if test="department != null">
+        #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="usePurpose != null">
+        #{usePurpose,jdbcType=VARCHAR},
+      </if>
+      <if test="oldtonew != null">
+        #{oldtonew,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tiemao.pojo.LingyongRecord">
+    update lingyong_record
+    <set>
+      <if test="productId != null">
+        product_id = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="user != null">
+        user = #{user,jdbcType=VARCHAR},
+      </if>
+      <if test="lingyongTime != null">
+        lingyong_time = #{lingyongTime,jdbcType=DATE},
+      </if>
+      <if test="department != null">
+        department = #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="usePurpose != null">
+        use_purpose = #{usePurpose,jdbcType=VARCHAR},
+      </if>
+      <if test="oldtonew != null">
+        oldtonew = #{oldtonew,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tiemao.pojo.LingyongRecord">
+    update lingyong_record
+    set product_id = #{productId,jdbcType=INTEGER},
+      user = #{user,jdbcType=VARCHAR},
+      lingyong_time = #{lingyongTime,jdbcType=DATE},
+      department = #{department,jdbcType=VARCHAR},
+      use_purpose = #{usePurpose,jdbcType=VARCHAR},
+      oldtonew = #{oldtonew,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

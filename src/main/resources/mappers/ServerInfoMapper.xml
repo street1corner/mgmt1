@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tiemao.dao.ServerInfoMapper">
+  <resultMap id="BaseResultMap" type="com.tiemao.pojo.ServerInfo">
+    <id column="server_id" jdbcType="INTEGER" property="serverId" />
+    <result column="server_name" jdbcType="VARCHAR" property="serverName" />
+    <result column="ip_address" jdbcType="VARCHAR" property="ipAddress" />
+    <result column="subnet_mask" jdbcType="VARCHAR" property="subnetMask" />
+    <result column="gateway" jdbcType="VARCHAR" property="gateway" />
+    <result column="server_account" jdbcType="VARCHAR" property="serverAccount" />
+    <result column="server_password" jdbcType="VARCHAR" property="serverPassword" />
+    <result column="port" jdbcType="INTEGER" property="port" />
+    <result column="comments" jdbcType="VARCHAR" property="comments" />
+    <result column="creat_time" jdbcType="DATE" property="creatTime" />
+    <result column="update_time" jdbcType="DATE" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    server_id, server_name, ip_address, subnet_mask, gateway, server_account, server_password, port, 
+    comments, creat_time, update_time
+  </sql>
+  
+  <!-- 分页查询搜索 -->
+  <select id="getServerInfo" parameterType="java.util.Map" resultMap="BaseResultMap">
+  	select
+  	<include refid="Base_Column_List" />
+  	from tm.server_info
+  	where 1=1
+    <if test="searchKey!=null and searchKey!='' and searchValue!=null and searchValue!=''">
+		AND ${searchKey} like '%${searchValue}%' 
+	</if> 
+  </select>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from server_info
+    where server_name = #{serverName,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tm.server_info
+    where server_id = #{serverId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.tiemao.pojo.ServerInfo">
+    insert into server_info (server_name, ip_address, subnet_mask, 
+      gateway, server_account, server_password, 
+      port, comments, creat_time, 
+      update_time)
+    values (#{serverName,jdbcType=VARCHAR}, #{ipAddress,jdbcType=VARCHAR}, #{subnetMask,jdbcType=VARCHAR}, 
+      #{gateway,jdbcType=VARCHAR}, #{serverAccount,jdbcType=VARCHAR}, #{serverPassword,jdbcType=VARCHAR}, 
+      #{port,jdbcType=INTEGER}, #{comments,jdbcType=VARCHAR}, #{creatTime,jdbcType=DATE}, 
+      #{updateTime,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tiemao.pojo.ServerInfo">
+    insert into tm.server_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="serverName != null">
+        server_name,
+      </if>
+      <if test="ipAddress != null">
+        ip_address,
+      </if>
+      <if test="subnetMask != null">
+        subnet_mask,
+      </if>
+      <if test="gateway != null">
+        gateway,
+      </if>
+      <if test="serverAccount != null">
+        server_account,
+      </if>
+      <if test="serverPassword != null">
+        server_password,
+      </if>
+      <if test="port != null">
+        port,
+      </if>
+      <if test="comments != null">
+        comments,
+      </if>
+      <if test="creatTime != null">
+        creat_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="serverName != null">
+        #{serverName,jdbcType=VARCHAR},
+      </if>
+      <if test="ipAddress != null">
+        #{ipAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="subnetMask != null">
+        #{subnetMask,jdbcType=VARCHAR},
+      </if>
+      <if test="gateway != null">
+        #{gateway,jdbcType=VARCHAR},
+      </if>
+      <if test="serverAccount != null">
+        #{serverAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="serverPassword != null">
+        #{serverPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="port != null">
+        #{port,jdbcType=INTEGER},
+      </if>
+      <if test="comments != null">
+        #{comments,jdbcType=VARCHAR},
+      </if>
+      <if test="creatTime != null">
+        #{creatTime,jdbcType=DATE},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tiemao.pojo.ServerInfo">
+    update tm.server_info
+    <set>
+      <if test="serverName != null">
+        server_name = #{serverName,jdbcType=VARCHAR},
+      </if>
+      <if test="ipAddress != null">
+        ip_address = #{ipAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="subnetMask != null">
+        subnet_mask = #{subnetMask,jdbcType=VARCHAR},
+      </if>
+      <if test="gateway != null">
+        gateway = #{gateway,jdbcType=VARCHAR},
+      </if>
+      <if test="serverAccount != null">
+        server_account = #{serverAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="serverPassword != null">
+        server_password = #{serverPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="port != null">
+        port = #{port,jdbcType=INTEGER},
+      </if>
+      <if test="comments != null">
+        comments = #{comments,jdbcType=VARCHAR},
+      </if>
+      <if test="creatTime != null">
+        creat_time = #{creatTime,jdbcType=DATE},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=DATE},
+      </if>
+    </set>
+    where server_id = #{serverId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tiemao.pojo.ServerInfo">
+    update server_info
+    set ip_address = #{ipAddress,jdbcType=VARCHAR},
+      subnet_mask = #{subnetMask,jdbcType=VARCHAR},
+      gateway = #{gateway,jdbcType=VARCHAR},
+      server_account = #{serverAccount,jdbcType=VARCHAR},
+      server_password = #{serverPassword,jdbcType=VARCHAR},
+      port = #{port,jdbcType=INTEGER},
+      comments = #{comments,jdbcType=VARCHAR},
+      creat_time = #{creatTime,jdbcType=DATE},
+      update_time = #{updateTime,jdbcType=DATE}
+    where server_name = #{serverName,jdbcType=VARCHAR}
+  </update>
+</mapper>

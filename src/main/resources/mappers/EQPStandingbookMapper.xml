@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tiemao.dao.EQPStandingbookMapper">
+  <resultMap id="BaseResultMap" type="com.tiemao.pojo.EQPStandingbook">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="eqp_name" jdbcType="VARCHAR" property="eqpName" />
+    <result column="eqp_number" jdbcType="VARCHAR" property="eqpNumber" />
+    <result column="eqp_model" jdbcType="VARCHAR" property="eqpModel" />
+    <result column="eqp_manufactor" jdbcType="VARCHAR" property="eqpManufactor" />
+    <result column="use_date" jdbcType="DATE" property="useDate" />
+    <result column="install_place" jdbcType="VARCHAR" property="installPlace" />
+    <result column="eqp_state" jdbcType="INTEGER" property="eqpState" />
+    <result column="dept" jdbcType="VARCHAR" property="dept" />
+    <result column="dept_sub" jdbcType="VARCHAR" property="deptSub" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="archives_number" jdbcType="VARCHAR" property="archivesNumber" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, eqp_name, eqp_number, eqp_model, eqp_manufactor, use_date, install_place, eqp_state, 
+    dept, dept_sub, remark, archives_number, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from eqp_standingbook
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  
+  <select id="getEQPStandingbookInfo" parameterType="map" resultMap="BaseResultMap">
+  	select
+  	<include refid="Base_Column_List"></include>
+  	FROM tm.eqp_standingbook
+ 	<if test="searchKey!=null and searchKey!='' and searchValue!=null and searchValue!=''">
+		where ${searchKey} like '%${searchValue}%' 
+	</if>
+  </select>  
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tm.eqp_standingbook
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.tiemao.pojo.EQPStandingbook">
+    insert into eqp_standingbook (id, eqp_name, eqp_number, 
+      eqp_model, eqp_manufactor, use_date, 
+      install_place, eqp_state, dept, 
+      dept_sub, remark, archives_number, 
+      create_time, update_time)
+    values (#{id,jdbcType=INTEGER}, #{eqpName,jdbcType=VARCHAR}, #{eqpNumber,jdbcType=VARCHAR}, 
+      #{eqpModel,jdbcType=VARCHAR}, #{eqpManufactor,jdbcType=VARCHAR}, #{useDate,jdbcType=DATE}, 
+      #{installPlace,jdbcType=VARCHAR}, #{eqpState,jdbcType=INTEGER}, #{dept,jdbcType=VARCHAR}, 
+      #{deptSub,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{archivesNumber,jdbcType=VARCHAR}, 
+      now(), now())
+  </insert>
+  <insert id="insertSelective" parameterType="com.tiemao.pojo.EQPStandingbook">
+    insert into tm.eqp_standingbook
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="eqpName != null">
+        eqp_name,
+      </if>
+      <if test="eqpNumber != null">
+        eqp_number,
+      </if>
+      <if test="eqpModel != null">
+        eqp_model,
+      </if>
+      <if test="eqpManufactor != null">
+        eqp_manufactor,
+      </if>
+      <if test="useDate != null">
+        use_date,
+      </if>
+      <if test="installPlace != null">
+        install_place,
+      </if>
+      <if test="eqpState != null">
+        eqp_state,
+      </if>
+      <if test="dept != null">
+        dept,
+      </if>
+      <if test="deptSub != null">
+        dept_sub,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="archivesNumber != null">
+        archives_number,
+      </if>
+        create_time,
+        update_time
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="eqpName != null">
+        #{eqpName,jdbcType=VARCHAR},
+      </if>
+      <if test="eqpNumber != null">
+        #{eqpNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="eqpModel != null">
+        #{eqpModel,jdbcType=VARCHAR},
+      </if>
+      <if test="eqpManufactor != null">
+        #{eqpManufactor,jdbcType=VARCHAR},
+      </if>
+      <if test="useDate != null">
+        #{useDate,jdbcType=DATE},
+      </if>
+      <if test="installPlace != null">
+        #{installPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="eqpState != null">
+        #{eqpState,jdbcType=INTEGER},
+      </if>
+      <if test="dept != null">
+        #{dept,jdbcType=VARCHAR},
+      </if>
+      <if test="deptSub != null">
+        #{deptSub,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="archivesNumber != null">
+        #{archivesNumber,jdbcType=VARCHAR},
+      </if>
+        now(),
+        now()
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tiemao.pojo.EQPStandingbook">
+    update tm.eqp_standingbook
+    <set>
+      <if test="eqpName != null">
+        eqp_name = #{eqpName,jdbcType=VARCHAR},
+      </if>
+      <if test="eqpNumber != null">
+        eqp_number = #{eqpNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="eqpModel != null">
+        eqp_model = #{eqpModel,jdbcType=VARCHAR},
+      </if>
+      <if test="eqpManufactor != null">
+        eqp_manufactor = #{eqpManufactor,jdbcType=VARCHAR},
+      </if>
+      <if test="useDate != null">
+        use_date = #{useDate,jdbcType=DATE},
+      </if>
+      <if test="installPlace != null">
+        install_place = #{installPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="eqpState != null">
+        eqp_state = #{eqpState,jdbcType=INTEGER},
+      </if>
+      <if test="dept != null">
+        dept = #{dept,jdbcType=VARCHAR},
+      </if>
+      <if test="deptSub != null">
+        dept_sub = #{deptSub,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="archivesNumber != null">
+        archives_number = #{archivesNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+        update_time = now()
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tiemao.pojo.EQPStandingbook">
+    update eqp_standingbook
+    set eqp_name = #{eqpName,jdbcType=VARCHAR},
+      eqp_number = #{eqpNumber,jdbcType=VARCHAR},
+      eqp_model = #{eqpModel,jdbcType=VARCHAR},
+      eqp_manufactor = #{eqpManufactor,jdbcType=VARCHAR},
+      use_date = #{useDate,jdbcType=DATE},
+      install_place = #{installPlace,jdbcType=VARCHAR},
+      eqp_state = #{eqpState,jdbcType=INTEGER},
+      dept = #{dept,jdbcType=VARCHAR},
+      dept_sub = #{deptSub,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      archives_number = #{archivesNumber,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = now()
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
