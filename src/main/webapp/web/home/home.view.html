@@ -1,0 +1,88 @@
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+  <div class="layui-header">
+    <div class="layui-logo" ui-sref="home"><img alt="" src="../static/img/tiemao_logo2.gif"> 后台管理</div>
+    <!-- 头部区域（可配合layui已有的水平导航） -->
+    <ul class="layui-nav layui-layout-left">
+      <li class="layui-nav-item"><a ui-sref="home.server">服务器台帐</a></li>
+      <li class="layui-nav-item"><a >报表查询</a></li>
+      <li class="layui-nav-item"><a ui-sref="home.user">用户管理</a></li>
+      <li class="layui-nav-item">
+        <a href="javascript:;">其它链接</a>
+        <dl class="layui-nav-child">
+          <dd><a href="">虚拟化管理平台</a></dd>
+          <dd><a href="">一卡通</a></dd>
+          <dd><a href="">PDM系统</a></dd>
+          <dd><a href="https://10.4.9.2" target="_blank">AC平台</a></dd>
+        </dl>
+      </li>
+    </ul>
+    <ul class="layui-nav layui-layout-right">
+      <li class="layui-nav-item">
+        <a href="javascript:;">
+          <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+          {{user.userNickname}}
+        </a>
+        <dl class="layui-nav-child">
+          <dd><a ui-sref="home.set"><i class="layui-icon">&#xe612;</i>&emsp;基本资料</a></dd>
+          <dd><a href=""><i class="layui-icon">&#xe631;</i>&emsp;安全设置</a></dd>
+        </dl>
+      </li>
+      <li class="layui-nav-item"><a ng-click="loginOut()"><i class="layui-icon">&#xe66c;</i>&nbsp;退了</a></li>
+    </ul>
+  </div>
+  
+  <div class="layui-side layui-bg-black">
+    <div class="layui-side-scroll">
+      <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+      <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+        <li class="layui-nav-item layui-nav-itemed">
+          <a class="" href="javascript:;">总经办运维</a>
+          <dl class="layui-nav-child">
+            <dd><a ui-sref="home.computer">计算机系统运维</a></dd>
+            <dd><a ui-sref="home.lyRecord">维修间领用记录</a></dd>
+            <dd><a ui-sref="home.eqpMaintain">设备维护记录</a></dd>
+            <dd><a ui-sref="home.repertory">库存管理</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item layui-nav-itemed">
+          <a class="" href="javascript:;">台帐管理</a>
+          <dl class="layui-nav-child">
+            <dd><a >计算机台帐</a></dd>
+            <dd><a ui-sref="home.server">服务器台帐</a></dd>
+            <dd><a href="javascript:;">打印机台帐</a></dd>
+            <dd><a ui-sref="home.eqp">设备台帐</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item">
+          <a href="javascript:;">工作日志</a>
+          <dl class="layui-nav-child">
+            <dd><a href="javascript:;">列表一</a></dd>
+            <dd><a href="javascript:;">列表二</a></dd>
+            <dd><a href="">超链接</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item"><a href="">统计查询</a></li>
+        <li class="layui-nav-item">
+        	<a href="javascript:;">基本设置</a>
+        	<dl class="layui-nav-child">
+            	<dd><a ui-sref="home.set">基本资料</a></dd>
+            	<dd><a href="http://localhost:8089/mgmt/web/druid/index.html" target="_blank">数据监控</a></dd>
+         	</dl>
+        </li>
+      </ul>
+    </div>
+  </div>
+  
+  <div class="layui-body" style="padding: 15px;">
+    <!-- 内容主体区域 -->
+    <div ui-view="main-container"></div>
+  </div>
+  
+  <div class="layui-footer">
+    <!-- 底部固定区域 -->
+     tiemao.com - 2018
+  </div>
+</div>
+
+</body>

@@ -1,0 +1,140 @@
+<div class="content-header">
+	<h2 class="content-title">计算机系统运维</h2>
+	<span class="layui-breadcrumb" style="visibility: visible;">
+	  <a href="#!home">总经办运维</a>
+	  <span lay-separator>/</span>
+	  <a><cite>计算机系统运维</cite></a>
+	</span>
+</div>
+<div>
+	<div class="layui-form toolbar">
+		搜索：
+		<select id="searchKey" ng-model="computer.searchkey">
+			<option value="">-请选择-</option>
+			<option value="computer_id">计算机编号</option>
+			<option value="brand">品牌</option>
+			<option value="username">使用人</option>
+		</select>&emsp;
+		<input id="searchValue" class="layui-input search-input" type="text" placeholder="输入搜索内容" ng-model="computer.searchValue"/>&emsp;
+		<button id="searchBtn" class="layui-btn search-btn" ng-click="doSearch()"><i class="layui-icon">&#xe615;</i>搜索</button>&emsp;
+		<button id="addBtn" class="layui-btn search-btn"><i class="layui-icon">&#xe654;</i>添加</button>
+	</div>
+	<table id="computertable" lay-filter="computer"></table>
+</div>
+
+<!-- 表格操作列 -->
+<script type="text/html" id="barTpl">
+  <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">编辑</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<!-- 表单弹窗 -->
+<script type="text/ng-template" id="addModel">
+	<h6>带<span style="color:red">*</span>为必填项</h6>
+	<form id="editForm" class="layui-form model-form" action="">
+		<input name="userId" type="hidden" />
+		<div class="main">
+		<div class="main-left">
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span style="color:red">*</span>PC编号</label>
+ 			<div class="layui-input-block">
+				<input name="computerId" placeholder="请输入编号" type="text" class="layui-input" maxlength="20" lay-verify="required" required/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span style="color:red">*</span>品牌</label>
+ 			<div class="layui-input-block">
+				<select name="brand" id="brand" lay-verify="required">
+        			
+      			</select>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span style="color:red">*</span>型号</label>
+ 			<div class="layui-input-block">
+				<input name="type" placeholder="请输入型号" type="text" class="layui-input"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span style="color:red">*</span>配置</label>
+ 			<div class="layui-input-block">
+				<input name="configure" placeholder="请输入配置" type="text" class="layui-input"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span style="color:red">*</span>mac地址</label>
+ 			<div class="layui-input-block">
+				<input name="macAddress" placeholder="请输入mac地址" type="text" class="layui-input" lay-verify="required" required />
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span style="color:red">*</span>安装人员</label>
+ 			<div class="layui-input-block">
+				<input name="installer" placeholder="请输入安装人员" type="text" class="layui-input" lay-verify="required" required />
+			</div>
+		</div>
+
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span style="color:red">*</span>安装系统</label>
+ 			<div class="layui-input-block">
+				<select name="installedSystem" id="installedSystem" lay-verify="required">
+
+      			</select>
+			</div>
+		</div>
+		</div>
+
+		<div class="main-right">
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span style="color:red">*</span>安装日期</label>
+ 			<div class="layui-input-block">
+				<input name="installedDate" id="installedDate" placeholder="请输入安装日期" type="text" class="layui-input" lay-verify="required" required />
+			</div>
+		</div>
+
+<div class="layui-form-item">
+    <label class="layui-form-label">电脑新旧</label>
+    <div class="layui-input-block" >
+      <input type="radio" name="newold" value="new" title="新电脑" lay-filter="test">
+      <input type="radio" name="newold" value="old" title="旧电脑" checked lay-filter="test">
+    </div>
+</div>
+		<div class="layui-form-item" id="newold">
+			<label class="layui-form-label"><span style="color:red">*</span>保修时间</label>
+ 			<div class="layui-input-block">
+				<input name="guaranteeTime" id="guaranteeTime" placeholder="请输入保修时间" type="text" class="layui-input"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span style="color:red">*</span>镜像版本</label>
+ 			<div class="layui-input-block">
+				<input name="mirroredVersion" placeholder="请输入镜像版本" type="text" class="layui-input" lay-verify="required" required />
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span style="color:red">*</span>责任人</label>
+ 			<div class="layui-input-block">
+				<input name="username" placeholder="请输入责任人" type="text" class="layui-input" lay-verify="required" required />
+			</div>
+		</div>
+
+        <div class="layui-form-item layui-form-text">
+            <label for="installedSoft" class="layui-form-label">安装软件</label>
+            <div class="layui-input-block">
+               <textarea placeholder="写些安装的软件...." id="installedSoft"  name="installedSoft" autocomplete="off" class="layui-textarea"></textarea>
+            </div>
+        </div>
+
+		</div>
+		</div>
+		<div class="layui-form-item model-form-footer">
+			<button class="layui-btn layui-btn-primary" type="button" id="btnCancel">取消</button>
+			<button class="layui-btn" lay-filter="btnSubmit" lay-submit>保存</button>
+		</div>
+	</form>
+</script>
+<script id="selectOption" type="text/html">
+<option value="">-请选择-</option>
+{{#  layui.each(d, function(index, item){ }}
+<option value="{{ item }}">{{ item }}</option>
+{{#  }); }}
+</script>

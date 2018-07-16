@@ -1,0 +1,144 @@
+<div class="content-header">
+	<h2 class="content-title">设备台帐</h2>
+	<span class="layui-breadcrumb" style="visibility: visible;">
+	  <a href="#!home">台帐管理</a>
+	  <span lay-separator>/</span>
+	  <a><cite>设备台帐</cite></a>
+	</span>
+</div>
+<div>
+	<div class="layui-form toolbar">
+		搜索：
+		<select id="searchKey" ng-model="eqp.searchkey" lay-search="">
+			<option value="">-请选择-</option>
+			<option value="eqp_name">设备名称</option>
+			<option value="archives_number">档案编号</option>
+			<option value="eqp_manufactor">厂家</option>
+		</select>&emsp;
+		<input id="searchValue" class="layui-input search-input" type="text" placeholder="输入搜索内容" ng-model="eqp.searchValue"/>&emsp;
+		<button id="searchBtn" class="layui-btn search-btn" ng-click="doSearch()"><i class="layui-icon">&#xe615;</i>搜索</button>&emsp;
+		<button id="addBtn" class="layui-btn search-btn"><i class="layui-icon">&#xe654;</i>添加</button>
+	</div>
+	<table id="eqptable" lay-filter="eqp"></table>
+</div>
+
+<!-- 表格操作列 -->
+<script type="text/html" id="barTpl">
+  <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">编辑</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<!-- 设备状态 -->
+<script type="text/html" id="articleTopicTpl">
+	{{#  if(d.eqpState === 1){ }}
+    	<span style="color: green;">完好</span>
+  	{{#  } else if(d.eqpState === 2){ }}
+    	<span style="color: red;">停用</span>
+  	{{#  } else if(d.eqpState === 3){ }}
+    	<span style="color: grey;">未验收</span>
+  	{{#  } else if(d.eqpState === 4){ }}
+    	<span style="color: yellow;">试生产</span>
+ 	{{#  } }}	
+</script>
+<!-- 表单弹窗 -->
+<script type="text/ng-template" id="addModel">
+	<h6>带<span style="color:red">*</span>为必填项</h6>
+	<form id="editForm" class="layui-form model-form" action="">
+		<input name="userId" type="hidden" />
+		<div class="main">
+		<div class="main-left">
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span style="color:red">*</span>设备名称</label>
+ 			<div class="layui-input-block">
+				<input name="eqpName" placeholder="请输入设备名称" type="text" class="layui-input" maxlength="20" lay-verify="required" required/>
+			</div>
+		</div>
+
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span style="color:red">*</span>设备编号</label>
+ 			<div class="layui-input-block">
+				<input name="eqpNumber" placeholder="请输入设备编号" type="text" class="layui-input"/>
+			</div>
+		</div>
+
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span style="color:red">*</span>型号</label>
+ 			<div class="layui-input-block">
+				<input name="eqpModel" placeholder="请输入型号" type="text" class="layui-input"/>
+			</div>
+		</div>
+
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span style="color:red">*</span>厂家</label>
+ 			<div class="layui-input-block">
+				<input name="eqpManufactor" placeholder="请输入厂家" type="text" class="layui-input" lay-verify="required" required />
+			</div>
+		</div>
+
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span style="color:red">*</span>档案编号</label>
+ 			<div class="layui-input-block">
+				<input name="archivesNumber" placeholder="请输入档案编号" type="text" class="layui-input" lay-verify="required" required />
+			</div>
+		</div>
+
+		</div>
+
+		<div class="main-right">
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span style="color:red">*</span>使用日期</label>
+ 			<div class="layui-input-block">
+				<input name="useDate" id="useDate" placeholder="请输入使用日期" type="text" class="layui-input" lay-verify="required"/>
+			</div>
+		</div>
+
+		<div class="layui-form-item" id="newold">
+			<label class="layui-form-label"><span style="color:red">*</span>安装地点</label>
+ 			<div class="layui-input-block">
+				<input name="installPlace" placeholder="请输入安装地点" type="text" class="layui-input"/>
+			</div>
+		</div>
+
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span style="color:red">*</span>设备状态</label>
+ 			<div class="layui-input-block">
+				<select name="eqpState" id="eqpState" lay-filter="eqpStatefilter" lay-verify="required" lay-search="">
+        			
+      			</select>
+			</div>
+		</div>
+
+
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span style="color:red">*</span>部门</label>
+ 			<div class="layui-input-block">
+				<input name="dept" placeholder="请输入部门" type="text" class="layui-input" lay-verify="required" required />
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span style="color:red">*</span>所属部门</label>
+ 			<div class="layui-input-block">
+				<input name="deptSub" placeholder="请输入所属部门" type="text" class="layui-input" lay-verify="required" required />
+			</div>
+		</div>
+
+        <div class="layui-form-item layui-form-text">
+            <label for="installedSoft" class="layui-form-label">备注</label>
+            <div class="layui-input-block">
+               <textarea placeholder="好记性不如烂笔头...." id="remark"  name="remark" autocomplete="off" class="layui-textarea"></textarea>
+            </div>
+        </div>
+
+		</div>
+		</div>
+		<div class="layui-form-item model-form-footer">
+			<button class="layui-btn layui-btn-primary" type="button" id="btnCancel">取消</button>
+			<button class="layui-btn" lay-filter="btnSubmit" lay-submit>保存</button>
+		</div>
+	</form>
+</script>
+<script id="selectOption" type="text/html">
+<option value="">-请选择-</option>
+{{#  layui.each(d, function(index, item){ }}
+<option value="{{ item.code }}">{{ item.state }}</option>
+{{#  }); }}
+</script>

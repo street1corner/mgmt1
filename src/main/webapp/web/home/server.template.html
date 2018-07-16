@@ -1,0 +1,94 @@
+<div class="content-header">
+	<h2 class="content-title">服务器台帐管理</h2>
+	<span class="layui-breadcrumb" style="visibility: visible;">
+	  <a href="#!home">台帐管理</a>
+	  <span lay-separator>/</span>
+	  <a><cite>服务器台帐管理</cite></a>
+	</span>
+</div>
+<div>
+	<div class="layui-form toolbar">
+		搜索：
+		<select id="searchKey" ng-model="server.searchkey">
+			<option value="">-请选择-</option>
+			<option value="server_name">服务器</option>
+			<option value="ip_address">IP地址</option>
+		</select>&emsp;
+		<input id="searchValue" class="layui-input search-input" type="text" placeholder="输入搜索内容" ng-model="server.searchValue"/>&emsp;
+		<button id="searchBtn" class="layui-btn search-btn" ng-click="doSearch()"><i class="layui-icon">&#xe615;</i>搜索</button>&emsp;
+		<button id="addBtn" class="layui-btn search-btn"><i class="layui-icon">&#xe654;</i>添加</button>
+	</div>
+	<table id="servertable" lay-filter="test"></table>
+</div>
+
+<!-- 表格操作列 -->
+<script type="text/html" id="barTpl">
+  <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">编辑</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+  <a class="layui-btn layui-btn-xs" lay-event="reset">重置密码</a>
+</script>
+<!-- 表单弹窗 -->
+<script type="text/html" id="addModel">
+	<h6>带<span style="color:red">*</span>为必填项</h6>
+	<form id="editForm" class="layui-form model-form" action="">
+		<input name="userId" type="hidden" />
+		<div class="main">
+		<div class="main-left">
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span style="color:red">*</span>服务器</label>
+ 			<div class="layui-input-block">
+				<input name="serverName" placeholder="请输入服务器名" type="text" class="layui-input" maxlength="20" lay-verify="required" required />
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span style="color:red">*</span>IP地址</label>
+ 			<div class="layui-input-block">
+				<input name="ipAddress" placeholder="请输入IP" type="text" class="layui-input" maxlength="20" lay-verify="required" required />
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span style="color:red">*</span>子网掩码</label>
+ 			<div class="layui-input-block">
+				<input name="subnetMask" placeholder="请输入掩码" type="text" class="layui-input" lay-verify="required" required />
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span style="color:red">*</span>网关</label>
+ 			<div class="layui-input-block">
+				<input name="gateway" placeholder="请输入网关" type="text" class="layui-input" lay-verify="required" required />
+			</div>
+		</div>
+		</div>
+		<div class="main-right">
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span style="color:red">*</span>帐号</label>
+ 			<div class="layui-input-block">
+				<input name="serverAccount" placeholder="请输入帐号" type="text" class="layui-input" lay-verify="required" required />
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span style="color:red">*</span>密码</label>
+ 			<div class="layui-input-block">
+				<input name="serverPassword" placeholder="请输入密码" type="text" class="layui-input" lay-verify="required" required />
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span style="color:red">*</span>端口</label>
+ 			<div class="layui-input-block">
+				<input name="port" placeholder="请输入端口号" type="text" class="layui-input" lay-verify="required" required />
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span style="color:red">*</span>备注</label>
+ 			<div class="layui-input-block">
+				<input name="comments" placeholder="请输入备注" type="text" class="layui-input" lay-verify="required" required />
+			</div>
+		</div>
+		</div>
+		</div>
+		<div class="layui-form-item model-form-footer">
+			<button class="layui-btn layui-btn-primary" type="button" id="btnCancel">取消</button>
+			<button class="layui-btn" lay-filter="btnSubmit" lay-submit>保存</button>
+		</div>
+	</form>
+</script>

@@ -1,0 +1,117 @@
+<div class="content-header">
+	<h2 class="content-title">维修间领用记录</h2>
+	<span class="layui-breadcrumb" style="visibility: visible;">
+	  <a href="#!home">总经办运维</a>
+	  <span lay-separator>/</span>
+	  <a><cite>维修间领用记录</cite></a>
+	</span>
+</div>
+<div>
+	<div class="layui-form toolbar">
+		搜索：
+		<select id="searchKey" ng-model="lyRecord.searchkey" lay-search="">
+			<option value="">-请选择-</option>
+			<option value="product_name">产品名称</option>
+			<option value="user">领用人</option>
+		</select>&emsp;
+		<input id="searchValue" class="layui-input search-input" type="text" placeholder="输入搜索内容" ng-model="lyRecord.searchValue"/>&emsp;
+		<button id="searchBtn" class="layui-btn search-btn" ng-click="doSearch()"><i class="layui-icon">&#xe615;</i>搜索</button>&emsp;
+		<button id="addBtn" class="layui-btn search-btn"><i class="layui-icon">&#xe654;</i>添加</button>
+	</div>
+	<table id="lyRecordtable" lay-filter="lyRecord"></table>
+</div>
+
+<!-- 表格操作列 -->
+<script type="text/html" id="barTpl">
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<!-- 是否以旧换新 -->
+<script type="text/html" id="articleTopicTpl">
+	{{#  if(d.oldtonew === 1){ }}
+    	<span style="color: red;">否</span>
+  	{{#  } else { }}
+    	<span style="color: green;">是</span>
+ 	{{#  } }}	
+</script>
+<!-- 表单弹窗 -->
+<script type="text/ng-template" id="addModel">
+	<h6>带<span style="color:red">*</span>为必填项</h6>
+	<form id="editForm" class="layui-form model-form" action="">
+		<input name="userId" type="hidden" />
+		<div class="main">
+		<div class="main-left">
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span style="color:red">*</span>产品名称</label>
+ 			<div class="layui-input-block">
+				<select name="productId" id="productId" lay-filter="productIdfilter" lay-verify="required" lay-search="">
+        			
+      			</select>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span style="color:red">*</span>领用人</label>
+ 			<div class="layui-input-block">
+				<input name="user" placeholder="请输入领用人" type="text" class="layui-input" maxlength="20" lay-verify="required"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span style="color:red">*</span>领取数量</label>
+ 			<div class="layui-input-inline">
+				<input name="amount" placeholder="请输入领取数" type="text" class="layui-input" lay-verify="required|number"/>
+			</div>
+			<div class="layui-form-mid layui-word-aux" id="remainamount"></div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span style="color:red">*</span>领用时间</label>
+ 			<div class="layui-input-block">
+				<input name="lingyongTime" id="lingyongTime" placeholder="请输入领用时间(yyyy-MM-dd)" type="text" class="layui-input" lay-verify="required|date"/>
+			</div>
+		</div>
+		
+		</div>
+
+		<div class="main-right">
+		<div class="layui-form-item">
+			<label class="layui-form-label"><span style="color:red">*</span>部门</label>
+ 			<div class="layui-input-block">
+				<input name="department" id="department" placeholder="请输入部门" type="text" class="layui-input" lay-verify="required"/>
+			</div>
+		</div>
+
+<div class="layui-form-item">
+    <label class="layui-form-label">是否以旧换新</label>
+    <div class="layui-input-block" >
+      <input type="radio" name="oldtonew" value="0" title="是" lay-filter="test">
+      <input type="radio" name="oldtonew" value="1" title="否" checked lay-filter="test">
+    </div>
+</div>
+		<div class="layui-form-item" id="newold">
+			<label class="layui-form-label">用途</label>
+ 			<div class="layui-input-block">
+				<input name="usePurpose" id="usePurpose" placeholder="请输入用途" type="text" class="layui-input"/>
+			</div>
+		</div>
+		
+		
+
+        <div class="layui-form-item layui-form-text">
+            <label for="remark" class="layui-form-label">备注</label>
+            <div class="layui-input-block">
+               <textarea placeholder="这里写备注...." id="remark"  name="remark" autocomplete="off" class="layui-textarea"></textarea>
+            </div>
+        </div>
+
+		</div>
+		</div>
+		<div class="layui-form-item model-form-footer">
+			<button class="layui-btn layui-btn-primary" type="button" id="btnCancel">取消</button>
+			<button class="layui-btn" lay-filter="btnSubmit" lay-submit>保存</button>
+		</div>
+	</form>
+</script>
+<script id="selectOption" type="text/html">
+<option value="">-请选择-</option>
+{{#  layui.each(d, function(index, item){ }}
+<option value="{{ item.productId }}">{{ item.productName }}</option>
+{{#  }); }}
+</script>
